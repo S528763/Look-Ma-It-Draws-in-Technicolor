@@ -8,8 +8,39 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+var dynamicColor:UIColor = UIColor.black
 
+class ViewController: UIViewController {
+    
+    
+    @IBAction func redBTN(_ sender: Any) {
+        dynamicColor = .red
+    }
+    
+    @IBAction func orangeBTN(_ sender: Any) {
+        dynamicColor = .orange
+    }
+    
+    @IBAction func yellowBTN(_ sender: Any) {
+        dynamicColor = .yellow
+    }
+    
+    @IBAction func greenBTN(_ sender: Any) {
+        dynamicColor = .green
+    }
+    
+    @IBAction func blueBTN(_ sender: Any) {
+        dynamicColor = .blue
+    }
+    
+    @IBAction func purpleBTN(_ sender: Any) {
+        dynamicColor = .purple
+    }
+    
+    @IBAction func cyanBTN(_ sender: Any) {
+        dynamicColor = .cyan
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
