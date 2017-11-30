@@ -8,50 +8,53 @@
 
 import UIKit
 
+struct Squiggles {
+    var dots:[CGPoint]
+    var color:UIColor
+}
+
 class SquiggleView: UIView {
     
     var dots:[CGPoint] = []
-    var squiggles:[[CGPoint]] = [[]]
-    var flag:Int = 0
-    var cnt:Int = 0
+    var squiggles:[Squiggles] = []
     
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        squiggles[cnt].append(touches.first!.location(in: self))
+        dots = []
+        dots.append(touches.first!.location(in: self))
+        setNeedsDisplay()
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        dots.append(touches.first!.location(in: self))
         setNeedsDisplay()
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        squiggles[cnt].append(touches.first!.location(in: self))
-        setNeedsDisplay()
-        cnt = cnt + 1
-     //   squiggles.append(CGPoint)
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        squiggles[cnt].append(touches.first!.location(in: self))
+        dots.append(touches.first!.location(in: self))
+        squiggles.append(Squiggles(dots: dots, color: dynamicColor))
         setNeedsDisplay()
     }
     
     override func draw(_ rect: CGRect) {
         // Drawing code
         
-        if squiggles[cnt].count == 0 {
+        if squiggles.count == 0 {
             return
         }
         
-        print(cnt)
-        
-        let bezier = UIBezierPath()
-        bezier.move(to: squiggles[cnt][0])
-        for squiggle in squiggles[cnt] {
-            bezier.addLine(to: squiggle)
-            dynamicColor.setStroke()
-            bezier.stroke()
+        for squiggle in squiggles {
+            let bezier = UIBezierPath()
+            bezier.move(to:squiggle.dots[0])
+            for dot in squiggle.dots {
+                bezier.addLine(to: dot)
+                squiggle.color.setStroke()
+                bezier.stroke()
+            }
+            
         }
-
         
     }
     
